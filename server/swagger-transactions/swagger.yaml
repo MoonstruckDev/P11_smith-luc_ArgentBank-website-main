@@ -4,7 +4,7 @@ info:
   description: Contains suggested API endpoints for transactions routes
   version: 1.0.0
 servers:
-  - url: http://localhost:3001/api/v1q
+  - url: http://localhost:3001/api/v1
 paths:
   /accounts:
     get:
@@ -28,7 +28,7 @@ paths:
           description: Unauthorized
         '500':
           description: Internal Server Error
-  /accounts/{id}/transactions/{month}:
+  /accounts/{accountId}/transactions/{month}:
     get:
       summary: Retrieve all transactions of an account for a specific month
       security:
@@ -37,7 +37,7 @@ paths:
         - Transactions Module
       parameters:
         - in: path
-          name: id
+          name: accountId
           required: true
           description: ID of the account
           schema:
@@ -64,7 +64,7 @@ paths:
           description: Transactions not found for the specified account and month
         '500':
           description: Internal Server Error
-  /accounts/{id}/transactions/{id}:
+  /accounts/{accountId}/transactions/{transactionId}:
     get:
       summary: Retrieve details of a single transaction
       security:
@@ -73,7 +73,14 @@ paths:
         - Transactions Module
       parameters:
         - in: path
-          name: id
+          name: accountId
+          required: true
+          description: ID of the account
+          schema:
+            type: integer
+            format: int64
+        - in: path
+          name: transactionId
           required: true
           description: ID of the transaction
           schema:
@@ -92,8 +99,8 @@ paths:
           description: Transaction not found
         '500':
           description: Internal Server Error
-  /accounts/{id}/transactions/{id}/category:
-    put:
+  /accounts/{accountId}/transactions/{transactionId}/category:
+    patch:
       summary: Edit the category of a specific transaction
       security:
         - BearerAuth: []
@@ -101,7 +108,14 @@ paths:
         - Transactions Module
       parameters:
         - in: path
-          name: id
+          name: accountId
+          required: true
+          description: ID of the account
+          schema:
+            type: integer
+            format: int64
+        - in: path
+          name: transactionId
           required: true
           description: ID of the transaction
           schema:
@@ -132,7 +146,7 @@ paths:
           description: Transaction not found
         '500':
           description: Internal Server Error
-  /accounts/{id}/transactions/{id}/note:
+  /accounts/{accountId}/transactions/{transactionId}/note:
     post:
       summary: Create a note for a specific transaction
       security:
@@ -141,7 +155,14 @@ paths:
         - Transactions Module
       parameters:
         - in: path
-          name: id
+          name: accountId
+          required: true
+          description: ID of the account
+          schema:
+            type: integer
+            format: int64
+        - in: path
+          name: transactionId
           required: true
           description: ID of the transaction
           schema:
@@ -170,7 +191,7 @@ paths:
           description: Unauthorized
         '500':
           description: Internal Server Error
-    put:
+    patch:
       summary: Edit the note of a specific transaction
       security:
         - BearerAuth: []
@@ -178,7 +199,14 @@ paths:
         - Transactions Module
       parameters:
         - in: path
-          name: id
+          name: accountId
+          required: true
+          description: ID of the account
+          schema:
+            type: integer
+            format: int64
+        - in: path
+          name: transactionId
           required: true
           description: ID of the transaction
           schema:
@@ -199,7 +227,7 @@ paths:
                   example: Anniversary
       responses:
         '200':
-          description: note successfully updated
+          description: Note successfully updated
           content:
             application/json:
               schema:
@@ -209,7 +237,7 @@ paths:
         '401':
           description: Unauthorized
         '404':
-          description: note not found
+          description: Note not found
         '500':
           description: Internal Server Error
     delete:
@@ -220,7 +248,14 @@ paths:
         - Transactions Module
       parameters:
         - in: path
-          name: id
+          name: accountId
+          required: true
+          description: ID of the account
+          schema:
+            type: integer
+            format: int64
+        - in: path
+          name: transactionId
           required: true
           description: ID of the transaction
           schema:
