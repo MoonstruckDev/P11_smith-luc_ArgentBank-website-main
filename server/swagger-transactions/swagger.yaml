@@ -147,52 +147,8 @@ paths:
         '500':
           description: Internal Server Error
   /accounts/{accountId}/transactions/{transactionId}/note:
-    post:
-      summary: Create a note for a specific transaction
-      security:
-        - BearerAuth: []
-      tags: 
-        - Transactions Module
-      parameters:
-        - in: path
-          name: accountId
-          required: true
-          description: ID of the account
-          schema:
-            type: integer
-            format: int64
-        - in: path
-          name: transactionId
-          required: true
-          description: ID of the transaction
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                noteContent:
-                  type: string
-                  example: Birth Day
-      responses:
-        '201':
-          description: Note successfully created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionNote'
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
     patch:
-      summary: Edit the note of a specific transaction
+      summary: Create or edit a note for a specific transaction
       security:
         - BearerAuth: []
       tags: 
@@ -219,15 +175,12 @@ paths:
             schema:
               type: object
               properties:
-                category:
-                  type: string
-                  example: Food
                 note:
                   type: string
-                  example: Anniversary
+                  example: "Birth Day"
       responses:
         '200':
-          description: Note successfully updated
+          description: Note successfully created or updated
           content:
             application/json:
               schema:
